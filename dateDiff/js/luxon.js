@@ -1,7 +1,7 @@
 let _exp = {};
 Object.defineProperty(_exp, '__esModule', {
   value: true
-}); // these aren't really private, but nor are they really useful to document
+}); //  these aren't really private, but nor are they really useful to document
 
 /**
  * @private

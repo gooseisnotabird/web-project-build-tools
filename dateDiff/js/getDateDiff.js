@@ -7,4 +7,4 @@ function getDateDiff (dateFrom, dateTo) {
   return dataFromObj.diff(dataToObj, ['years', 'months', 'days']).toObject()
 }
 
-export default getDateDiff
+export default getDateDiff 
