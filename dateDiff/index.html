@@ -1,44 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script type="module" src="./js/main.js"></script>
+  <link href='css/style.css' rel="stylesheet" type="text/css">
 </head>
 <body>
-
-  <form id="datecalc">
-    <h3>Калькулятор дат</h3>
-    <label>
-        <strong>Первая дата:</strong>
-        <input type="date" name="firstDate" />
-    </label>
-    <label>
-        <strong>Вторая дата:</strong>
-        <input type="date" name="secondDate" />
-    </label>
-    <button type="submit">Расчитать промежуток</button>
-    <p id="datecalc__result"></p>
-  </form> 
-
-
-  <form id="timer">
-    <h3>Таймер</h3>
-    <div>
-      <input type="button" value='start' id='startBtn'>
-      <input type="button" value='stop' id='stopBtn'>
-      <input type="button" value='reset' id='resetBtn'>
+  
+  <div class="tabs">
+    <div class="tabs__nav">
+      <button class="tabs__btn tabs__btn_active">Калькулятор дат</button>
+      <button class="tabs__btn">Таймер</button>
     </div>
-    <div>
-      <h3 id='showTime'></h3>
-    </div>
-  </form>
+    <div class="tabs__content">
+      <div class="tabs__pane tabs__pane_show">
+        <form id="datecalc">
+          <h3>Калькулятор дат</h3>
+          <label>
+            <strong>Первая дата:</strong>
+            <input type="date" name="firstDate" />
+          </label>
+          <label>
+            <strong>Вторая дата:</strong>
+            <input type="date" name="secondDate" />
+          </label>
+          <button type="submit">Расчитать промежуток</button>
+          <p id="datecalc__result"></p>
+        </form> 
+      </div>
 
-  <script defer src="js/timer.js"></script> 
+      <div class="tabs__pane">
+   
+         <form id="timer">
+          <input type="date" name="setTime">
+
+          <button type="submit">старт</button>
+         
+         <!-- <div class="timer">
+          <div class="timer__items">
+            <div class="timer__item timer__days" data-title="дней"></div>
+            <div class="timer__divider"></div>
+            <div class="timer__item timer__hours" data-title="часов"></div>
+            <div class="timer__divider"></div>
+            <div class="timer__item timer__minutes" data-title="минут"></div>
+            <div class="timer__divider"></div>
+            <div class="timer__item timer__seconds" data-title="секунд"></div>
+          </div>
+        </div> -->
+        <div id="timer" class="timer col">
+          <div class="timer-section">
+           <div class="days-block">
+            <span class="days">00</span>
+           </div>
+           <span class="uncorrectDays">ДНЕЙ</span>
+          </div>
+         
+          <div class="timer-section">
+           <div class="hours-block">
+            <span class="hours">00</span>
+           </div>
+           <span class="uncorrectHours">ЧАСОВ</span>
+           </div>
+         
+           <div class="timer-section">
+            <div class="minutes-block">
+             <span class="minutes">00</span>
+            </div>
+            <span class="uncorrectMinutes">МИНУТ</span>
+           </div>
+         
+           <div class="timer-section">
+            <div class="seconds-block">
+             <span class="seconds">00</span>
+            </div>
+            <span class="uncorrectSeconds">СЕКУНД</span>
+           </div>
+         </div>
+
+      </form>
+
+      </div>
+    </div> 
+  </div>
+
 
 </body>
-
 
 </html>
