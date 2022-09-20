@@ -1,0 +1,140 @@
+.container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tabs {
+    padding-top: 30px;
+    border: 0px;
+    color: #fff;
+  }
+  
+  .tabs__nav {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    background: #fafafa;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .tabs__btn {
+    width: 500px;
+    font-weight: 100;
+    font-size: 18px;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    flex-shrink: 0;
+    flex-grow: 1;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background-color: rgb(60 60 60);
+    color: #fff;
+  }
+  
+  .tabs__btn_active {
+    font-weight: 100;
+    font-size: 18px;
+    cursor: default;
+    background-color: #00bf96;
+    color: #fff;
+  }
+  
+  .tabs__btn:not(.tabs__btn_active):hover,
+  .tabs__btn:not(.tabs__btn_active):focus {
+    background-color: #eee;
+  }
+  
+  .tabs__content {
+    padding: 1rem;
+    padding-top: 100px;
+  }
+  
+  .tabs__pane {
+    display: none;
+  }
+  
+  .tabs__pane_show {
+    display: block;
+  }
+  
+  
+  /* timer-block */
+  body {
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 100;
+    background-color: rgb(60 60 60);
+  }
+  
+  .countdown {
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+  }
+  
+  .countdown-number {
+    padding: 10px;
+    border-radius: 3px;
+    background: #00bf96;
+    display: inline-block;
+  }
+  
+  .countdown-time {
+    padding: 15px;
+    border-radius: 3px;
+    background: #00816a;
+    display: inline-block;
+  }
+  
+  .countdown-text {
+    display: block;
+    padding-top: 5px;
+    font-size: 16px;
+  }
+  
+  #timer { 
+    display: flex;
+    flex-direction: column
+  }
+  
+  .timerSetBlock{
+    padding-bottom: 15px;
+  }
+  
+  .dateInputs {
+    border: 1px solid #A4A4A4;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    opacity: 0.9;
+    height: 42px;
+    font-style: normal;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    padding-left: 16px;
+    margin: 10px 10px 0px 10px;
+    border-radius: 4px;
+  }
+  
+  .submitBtn {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFFFFF;
+    padding: 10px;
+    background: #28c9a6;
+    border: 0;
+    border-radius: 4px;
+    width: 185px;
+  }
+  
+  #datecalc__result {
+    margin-top: 60px;
+    font-size: 18px;
+  }
