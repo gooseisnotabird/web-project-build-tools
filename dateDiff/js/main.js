@@ -1,7 +1,14 @@
-// import { DateTime } from './luxon.js'
 import { printError, printResult } from './printResult.js'
 import getDateDiff from './getDateDiff.js'
 import ItcTabs from './switcher.js'
+// import {Howl, Howler} from './howler.js'; //The requested module './howler.js' does not provide an export named 'Howl'
+// // const {Howl, Howler} = require('./howler.js');  //require is not defined
+
+// var sound = new Howl({
+//   src: ['./../goodmorning.mp3'],
+// });
+
+// sound.play();
 
 
 new ItcTabs('.tabs');
@@ -30,6 +37,8 @@ form.onsubmit = (event) => {
 }
 
  
+
+
 const timer = document.getElementById("timer")
 timer.onsubmit = (event) => {
   event.preventDefault();
@@ -39,33 +48,14 @@ timer.onsubmit = (event) => {
   console.log (timerSetUp);
 
 
-const endtime = timerSetUp;
-
-
-
-
-// const endtime = 'Dec 1 2023, 17:00 GMT+0400';
-
-// приводим к стандартному виду 03:04:05, вместо 3:4:5
-function makeCorrectDate(uncorrectDate) {
-  let correctDate = uncorrectDate;
-  if (uncorrectDate < 10) {
-    correctDate = '0' + uncorrectDate;
-  }
-  return correctDate;
-}
-
-// сколько времени осталось
-function getDateRemaining(timesup) {
-  // total = оставшееся вермя
-  var total = Date.parse(timesup) - Date.now();
-  var seconds = Math.floor((total / 1000) % 60);
-  var minutes = Math.floor((total / 1000 / 60) % 60);
-  var hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-  var days = Math.floor(total / (1000 * 60 * 60 * 24));
-  // вывод объектов
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
   return {
-    'total': total,
+    'total': t,
     'days': days,
     'hours': hours,
     'minutes': minutes,
@@ -73,252 +63,32 @@ function getDateRemaining(timesup) {
   };
 }
 
-// инициализация таймера на самом сайте
-function setTime(id, timesup) {
-  let timer = document.getElementById(id),
-    days = timer.querySelector('.days'),
-    hours = timer.querySelector('.hours'),
-    minutes = timer.querySelector('.minutes'),
-    seconds = timer.querySelector('.seconds'),
-    // обновление таймера каждые 1000мс
-    timeInterval = setInterval(update, 1000);
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
 
-  function update() {
-    // результат функции getDateRemaining
-    let total = getDateRemaining(timesup);
-    // Проверка на ноль
-    var nowdate = Date.now();
-    if (nowdate <= Date.parse(endtime)) {
-      var nowdate = Date.now();
-      days.textContent = makeCorrectDate(total.days);
-    	hours.textContent = makeCorrectDate(total.hours);
-    	minutes.textContent = makeCorrectDate(total.minutes);
-    	seconds.textContent = makeCorrectDate(total.seconds);
-    } else {
-      days.textContent = 0;
-      hours.textContent = 0;
-      minutes.textContent = 0;
-      seconds.textContent = 0;
-    }
-    	
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
 
-    // Окончания часов
-    switch (total.days) {
-      case 1:
-      case 21:
-      case 31:
-      case 41:
-      case 51:
-       correctDays = "ДЕНЬ";
-        // console.log(total.days, correctDays); // DEBUG
-        break;
-      case 2:
-      case 3:
-      case 4:
-      case 22:
-      case 23:
-      case 24:
-      case 32:
-      case 33:
-      case 34:
-      case 42:
-      case 43:
-      case 44:
-      case 52:
-      case 53:
-      case 54:
-        correctDays = "ДНЯ";
-         console.log(total.days, correctDays); // DEBUG
-        break;
-      default:
-        correctDays = "ДНЕЙ";
-         console.log(total.days, correctDays); // DEBUG
-    }
-    document.querySelector('.uncorrectDays').textContent = correctDays;
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
-    // Окончания часов
-    switch (total.hours) {
-      case 1:
-      case 21:
-      case 31:
-      case 41:
-      case 51:
-        correctHours = "ЧАС";
-        // console.log(total.hours, correctHours); // DEBUG
-        break;
-      case 2:
-      case 3:
-      case 4:
-      case 22:
-      case 23:
-      case 24:
-      case 32:
-      case 33:
-      case 34:
-      case 42:
-      case 43:
-      case 44:
-      case 52:
-      case 53:
-      case 54:
-        correctHours = "ЧАСА";
-        // console.log(total.hours, correctHours); // DEBUG
-        break;
-      default:
-        correctHours = "ЧАСОВ";
-        // console.log(total.hours, correctHours); // DEBUG
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
     }
-    document.querySelector('.uncorrectHours').textContent = correctHours;
-
-    // Окончания минут
-    switch (total.minutes) {
-      case 1:
-      case 21:
-      case 31:
-      case 41:
-      case 51:
-        correctMinutes = "МИНУТА";
-        // console.log(total.minutes, correctMinutes); // DEBUG
-        break;
-      case 2:
-      case 3:
-      case 4:
-      case 22:
-      case 23:
-      case 24:
-      case 32:
-      case 33:
-      case 34:
-      case 42:
-      case 43:
-      case 44:
-      case 52:
-      case 53:
-      case 54:
-        correctMinutes = "МИНУТЫ";
-        // console.log(total.minutes, correctMinutes); // DEBUG
-        break;
-      default:
-        correctMinutes = "МИНУТ";
-        // console.log(total.minutes, correctMinutes); // DEBUG
-    }
-    document.querySelector('.uncorrectMinutes').textContent = correctMinutes;
-
-    // Окончания секунд
-    switch (total.seconds) {
-      case 1:
-      case 21:
-      case 31:
-      case 41:
-      case 51:
-        correctSeconds = "СЕКУНДА";
-        // console.log(total.seconds, correctSeconds); // DEBUG
-        break;
-      case 2:
-      case 3:
-      case 4:
-      case 22:
-      case 23:
-      case 24:
-      case 32:
-      case 33:
-      case 34:
-      case 42:
-      case 43:
-      case 44:
-      case 52:
-      case 53:
-      case 54:
-        correctSeconds = "СЕКУНДЫ";
-        // console.log(total.seconds, correctSeconds); // DEBUG
-        break;
-      default:
-        correctSeconds = "СЕКУНД";
-        // console.log(total.seconds, correctSeconds); // DEBUG
-    }
-    document.querySelector('.uncorrectSeconds').textContent = correctSeconds;
   }
-}
-setTime('timer', endtime);
 
-
-
-
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function changeTimezone(date, ianatz) {
-//   var invdate = new Date(date.toLocaleString('en-US', {
-//     timeZone: ianatz
-//   }));
-
-//   var diff = invdate.getTime() - date.getTime();
-
-//   return new Date(date.getTime() - diff);
-// };
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   // конечная дата
-//   const x = new Date("2023-01-01T10:00:00");
- 
-//   // часовой пояс
-//   // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-//   var deadline = changeTimezone(x, "Europe/Ulyanovsk");
-//   // id таймера
-//   let timerId = null;
-//   // склонение числительных
-//   function declensionNum(num, words) {
-//     return words[(num % 100 > 4 && num % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(num % 10 < 5) ? num % 10 : 5]];
-//   }
-//   // вычисляем разницу дат и устанавливаем оставшееся времени в качестве содержимого элементов
-//   function countdownTimer() {
-//     const diff = deadline - new Date();
-//     if (diff <= 0) {
-//       clearInterval(timerId);
-//     }
-//     const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
-//     const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
-//     const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
-//     const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
-//     $days.textContent = days < 10 ? '0' + days : days;
-//     $hours.textContent = hours < 10 ? '0' + hours : hours;
-//     $minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
-//     $seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
-//     $days.dataset.title = declensionNum(days, ['день', 'дня', 'дней']);
-//     $hours.dataset.title = declensionNum(hours, ['час', 'часа', 'часов']);
-//     $minutes.dataset.title = declensionNum(minutes, ['минута', 'минуты', 'минут']);
-//     $seconds.dataset.title = declensionNum(seconds, ['секунда', 'секунды', 'секунд']);
-//   }
-//   // получаем элементы, содержащие компоненты даты
-//   const $days = document.querySelector('.timer__days');
-//   const $hours = document.querySelector('.timer__hours');
-//   const $minutes = document.querySelector('.timer__minutes');
-//   const $seconds = document.querySelector('.timer__seconds');
-//   // вызываем функцию countdownTimer
-//   countdownTimer();
-//   // вызываем функцию countdownTimer каждую секунду
-//   timerId = setInterval(countdownTimer, 1000);
-// });
+// var deadline="January 01 2018 00:00:00 GMT+0300"; //for Moscow
+// var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); // for endless timer
+var deadline = new Date(timerSetUp);
+initializeClock('countdown', deadline);
+}
